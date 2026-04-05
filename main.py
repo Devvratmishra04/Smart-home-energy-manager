@@ -23,6 +23,12 @@ class ResetRequest(BaseModel):
     task: str
 
 
+@app.get("/")
+def read_root():
+    """Root homepage endpoint so the HF Space doesn't show 'Not Found'."""
+    return {"message": "Welcome to the Smart Home Energy Manager API! Append /docs to the URL to explore the endpoints."}
+
+
 @app.get("/health")
 def health():
     """Health check endpoint required by OpenEnv runtime."""
