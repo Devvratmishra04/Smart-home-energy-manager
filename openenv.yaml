@@ -1,0 +1,43 @@
+spec_version: 1
+name: "smart-home-manager"
+description: "Smart Home Energy Management RL environment with dynamic pricing, solar panels, and battery storage"
+version: "1.0.0"
+type: space
+runtime: fastapi
+app: "main:app"
+port: 8000
+
+observation_space:
+  hour_of_day:
+    type: int
+    range: [0, 23]
+  battery_soc:
+    type: float
+    range: [0.0, 1.0]
+  current_demand_kw:
+    type: float
+    range: [0.0, null]
+  solar_generation_kw:
+    type: float
+    range: [0.0, null]
+  grid_price_per_kwh:
+    type: float
+    range: [0.0, null]
+
+action_space:
+  action_type:
+    type: enum
+    values: ["charge_from_grid", "discharge_to_home", "sell_to_grid", "idle"]
+
+reward_range: [0.0, 1.0]
+
+tasks:
+  - name: "easy"
+    description: "Sunny day, fixed pricing. Store solar during day, use at night."
+    difficulty: 1
+  - name: "medium"
+    description: "Cloudy day, time-of-use pricing. Pre-charge before expensive peak hours."
+    difficulty: 2
+  - name: "hard"
+    description: "Random weather, dynamic pricing with extreme spikes. Aggressive trading required."
+    difficulty: 3
