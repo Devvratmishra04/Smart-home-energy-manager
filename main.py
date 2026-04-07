@@ -73,3 +73,11 @@ def get_state():
     Returns State model with episode_id, task_name, step_count, is_done, and observation.
     """
     return env.state()
+
+
+def start_server():
+    """Entry point for the scaler deployment server."""
+    import uvicorn
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
