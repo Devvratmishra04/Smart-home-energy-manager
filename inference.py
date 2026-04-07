@@ -6,8 +6,8 @@ with the FastAPI environment server.
 
 Required environment variables:
     API_BASE_URL   — LLM API endpoint (e.g., https://api.openai.com/v1)
-    MODEL_NAME     — Model identifier (e.g., gpt-4)
-    HF_TOKEN       — Hugging Face / API token (used as API key)
+    MODEL_NAME     — Model identifier (e.g., gpt-4o)
+    HF_TOKEN       — Hugging Face Token (used as API key for OpenAI client)
 
 Optional environment variables:
     ENV_BASE_URL   — Override environment server URL (for local dev).
@@ -29,8 +29,8 @@ from openai import AsyncOpenAI
 # ---------------------------------------------------------------------------
 # Config from environment variables
 # ---------------------------------------------------------------------------
-API_BASE_URL = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
-MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4")
+API_BASE_URL = os.getenv("API_BASE_URL", "<your-active-model-api-base-url>")
+MODEL_NAME = os.getenv("MODEL_NAME", "<your-active-model-name>")
 HF_TOKEN = os.getenv("HF_TOKEN")
 LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 

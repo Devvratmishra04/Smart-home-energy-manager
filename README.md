@@ -94,8 +94,8 @@ python prevalidate.py
 ### Run LLM Inference
 ```bash
 export API_BASE_URL="https://api.openai.com/v1"
-export MODEL_NAME="gpt-4"
-export HF_TOKEN="your-token-here"
+export MODEL_NAME="gpt-4o"
+export HF_TOKEN="your-hf-token-here"
 # Optional: override env URL for local dev
 # export ENV_BASE_URL="http://localhost:8000"
 python inference.py
