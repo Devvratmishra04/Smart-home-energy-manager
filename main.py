@@ -3,6 +3,7 @@ FastAPI server for the Smart Home Energy Manager environment.
 Exposes /reset, /step, /state, and /health endpoints for the OpenEnv framework.
 """
 
+from typing import Optional
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from env.environment import SmartHomeEnv
@@ -20,7 +21,7 @@ env = SmartHomeEnv()
 
 class ResetRequest(BaseModel):
     """Request body for the /reset endpoint."""
-    task: str
+    task: str = "easy"
 
 
 @app.get("/")
@@ -36,14 +37,15 @@ def health():
 
 
 @app.post("/reset", response_model=Observation)
-def reset_env(req: ResetRequest):
+def reset_env(req: Optional[ResetRequest] = None):
     """
     Reset the environment for a new episode.
-    Accepts a task name: "easy", "medium", or "hard".
+    Accepts a task name: "easy", "medium", or "hard". Defaults to "easy".
     Returns the initial Observation.
     """
     try:
-        obs = env.reset(req.task)
+        task_name = req.task if req else "easy"
+        obs = env.reset(task_name)
         return obs
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
