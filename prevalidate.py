@@ -10,7 +10,7 @@ import json
 import random
 import yaml
 from starlette.testclient import TestClient
-from main import app
+from server.app import app
 
 client = TestClient(app)
 

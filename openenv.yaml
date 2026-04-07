@@ -4,7 +4,7 @@ description: "Smart Home Energy Management RL environment with dynamic pricing, 
 version: "1.0.0"
 type: space
 runtime: fastapi
-app: "main:app"
+app: "server.app:app"
 port: 8000
 
 observation_space:

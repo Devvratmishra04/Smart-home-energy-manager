@@ -20,4 +20,4 @@ dependencies = [
 ]
 
 [project.scripts]
-server = "main:start_server"
+server = "server.app:main"

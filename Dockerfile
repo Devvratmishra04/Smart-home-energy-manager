@@ -23,4 +23,4 @@ COPY --chown=user . .
 EXPOSE $PORT
 
 # 7. Start the FastAPI server using the PORT variable
-CMD uvicorn main:app --host 0.0.0.0 --port $PORT
+CMD uvicorn server.app:app --host 0.0.0.0 --port $PORT
