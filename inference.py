@@ -47,9 +47,9 @@ ENV_BASE_URL = os.environ.get(
 
 TASKS = ["easy", "medium", "hard"]
 
-# Maximum retries when waiting for the environment server to become healthy
-HEALTH_CHECK_RETRIES = 10
-HEALTH_CHECK_INTERVAL_SECONDS = 3
+# Maximum retries when waiting for the environment server to become healthy (HF Spaces can take 2+ mins to wake)
+HEALTH_CHECK_RETRIES = 60
+HEALTH_CHECK_INTERVAL_SECONDS = 5
 
 
 SYSTEM_PROMPT = """You are an energy management agent controlling a smart home with solar panels and a battery.
@@ -192,7 +192,7 @@ async def run_task(
             )
             if step_resp.status_code != 200:
                 error_str = step_resp.text.replace('"', '\\"')
-                reward_val = 0.0
+                reward_val = 0.01  # Must be strictly > 0.0 for OpenEnv validator
                 done = True
                 success = False
             else:
@@ -202,7 +202,7 @@ async def run_task(
                 done = data["done"]
         except Exception as e:
             error_str = str(e).replace('"', '\\"')
-            reward_val = 0.0
+            reward_val = 0.01  # Must be strictly > 0.0 for OpenEnv validator
             done = True
             success = False
 
