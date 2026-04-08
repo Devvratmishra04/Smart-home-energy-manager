@@ -6,7 +6,7 @@ Implements reset(), step(), and state() for the OpenEnv framework.
 import uuid
 from .models import Observation, Action, Reward, StepResponse, State
 from .tasks import generate_profile, compute_naive_cost, compute_optimal_cost, VALID_TASKS
-from .reward import calculate_reward
+from .reward import calculate_reward, _MIN_REWARD
 from .grader import calculate_score
 
 
@@ -93,7 +93,7 @@ class SmartHomeEnv:
         if self.episode_done:
             return StepResponse(
                 observation=self._get_observation(),
-                reward=Reward(value=0.0, is_invalid=True, description="Episode already done. Call /reset."),
+                reward=Reward(value=_MIN_REWARD, is_invalid=True, description="Episode already done. Call /reset."),
                 done=True,
                 info={}
             )

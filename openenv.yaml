@@ -29,7 +29,7 @@ action_space:
     type: enum
     values: ["charge_from_grid", "discharge_to_home", "sell_to_grid", "idle"]
 
-reward_range: [0.0, 1.0]
+reward_range: [0.01, 0.99]
 
 tasks:
   - name: "easy"
