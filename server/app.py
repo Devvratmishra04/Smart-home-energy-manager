@@ -36,6 +36,7 @@ def health():
     return {"status": "ok"}
 
 
+@app.get("/reset", response_model=Observation)
 @app.post("/reset", response_model=Observation)
 def reset_env(req: Optional[ResetRequest] = None):
     """
