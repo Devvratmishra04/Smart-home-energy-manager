@@ -164,18 +164,21 @@ async def run_task(
             f"{ENV_BASE_URL}/reset", json={"task": task_name}
         )
         if reset_resp.status_code != 200:
-            print(f"[END] success=false steps=0 rewards=")
+            # Must output a valid score strictly in (0, 1)
+            print(f"[END] success=false steps=0 score=0.01 rewards=0.01")
             print()
             return
         observation = reset_resp.json()
     except Exception as e:
-        print(f"[END] success=false steps=0 rewards=")
+        # Must output a valid score strictly in (0, 1)
+        print(f"[END] success=false steps=0 score=0.01 rewards=0.01")
         print()
         return
 
     rewards_list = []
     step_num = 0
     success = True
+    episode_score = 0.01  # fallback; overwritten from info["score"] on final step
 
     while True:
         step_num += 1
@@ -200,6 +203,9 @@ async def run_task(
                 observation = data["observation"]
                 reward_val = data["reward"]["value"]
                 done = data["done"]
+                # Capture the episode score from grader on final step
+                if done:
+                    episode_score = data.get("info", {}).get("score", episode_score)
         except Exception as e:
             error_str = str(e).replace('"', '\\"')
             reward_val = 0.01  # Must be strictly > 0.0 for OpenEnv validator
@@ -220,9 +226,9 @@ async def run_task(
         if done:
             break
 
-    # Print END line
+    # Print END line — score= is the grader's episode score, strictly in (0, 1)
     rewards_str = ",".join(format_reward(r) for r in rewards_list)
-    print(f"[END] success={format_bool(success)} steps={step_num} rewards={rewards_str}")
+    print(f"[END] success={format_bool(success)} steps={step_num} score={episode_score:.4f} rewards={rewards_str}")
     print()  # Blank line between tasks
 
 
@@ -245,7 +251,7 @@ async def main():
             except Exception as e:
                 # Absolute last-resort catch — ensure the script never crashes
                 print(f"[START] task={task} env=SmartHomeEnv model={MODEL_NAME}")
-                print(f"[END] success=false steps=0 rewards=")
+                print(f"[END] success=false steps=0 score=0.01 rewards=0.01")
                 print()
 
 
