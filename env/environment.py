@@ -114,9 +114,11 @@ class SmartHomeEnv:
         info = {}
         if done:
             self.episode_done = True
-            info["final_score"] = calculate_score(
+            final_sc = calculate_score(
                 self.naive_cost, self.optimal_cost, self.total_cost
             )
+            info["final_score"] = final_sc
+            info["score"] = final_sc  # OpenEnv often expects the key to be exactly "score"
             info["total_cost"] = round(self.total_cost, 4)
 
         # Clamp hour for observation safety
