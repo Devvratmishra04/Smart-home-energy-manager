@@ -12,8 +12,8 @@ the OpenEnv validator's strict 0 < score < 1 constraint is always satisfied.
 from .models import Reward
 
 # Strict bounds required by the OpenEnv validator (exclusive of 0.0 and 1.0)
-_MIN_REWARD = 0.0001
-_MAX_REWARD = 0.9999
+_MIN_REWARD = 0.01
+_MAX_REWARD = 0.99
 
 
 def _clamp(value: float) -> float:

@@ -11,8 +11,8 @@ strict requirement that each task score falls strictly within (0, 1).
 """
 
 # Strict bounds required by the OpenEnv validator (exclusive of 0.0 and 1.0)
-_MIN_SCORE = 0.0001
-_MAX_SCORE = 0.9999
+_MIN_SCORE = 0.01
+_MAX_SCORE = 0.99
 
 
 def calculate_score(naive_cost: float, optimal_cost: float, agent_cost: float) -> float:
